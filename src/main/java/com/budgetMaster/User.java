@@ -7,10 +7,10 @@ import java.util.List;
 
 public class User {
     private String name;
-    private double monthlyBudget;
+    private Double monthlyBudget;
     private List<Expense> expenses;
 
-    public User(String name, double monthlyBudget) {
+    public User(String name, Double monthlyBudget) {
         this.name = name;
         this.monthlyBudget = monthlyBudget;
     }
@@ -40,14 +40,26 @@ public class User {
     }
 
     public List<Expense> getExpenseByCategory(ExpenseCategory category){
-        List<Expense> expense_by_category = new ArrayList<>();
-        for (Expense expense : expenses){
-            if (expense.getExpenseCategory() == category){
-                expense_by_category.add(expense);
-            }
-        }
-        return expense_by_category;
+        return expenses.stream().filter(e -> e.getExpenseCategory() == category).toList();
     }
 
+    public Double getTotalSpentThisMonth(){
+        Double totalExpense = (double) 0;
+        for (Expense expense : expenses){
+            totalExpense += expense.getAmount();
+        }
+        return  totalExpense;
+    }
 
+    public Double getRemainingBudget(){
+        return  this.monthlyBudget - getTotalSpentThisMonth();
+    }
+
+    public List<Category> getTopCategories(){
+        List<Expense> sortedExpenses = new ArrayList<>();
+        for (Expense expense : expenses){
+
+        }
+
+    }
 }
